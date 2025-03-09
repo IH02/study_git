@@ -4,7 +4,7 @@
 
 int main() {
     print_version();
-    printf("Hello, Makefile!\n");
+    printf("-----------------------------------\n");
     print_message();
     return 0;
 }
