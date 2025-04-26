@@ -6,15 +6,17 @@ SRCS = $(wildcard src/*.c)
 OBJS = $(SRCS:src/%.c=obj/%.o)
 
 # 기본 빌드 명령
-all: $(TARGET)
+all: clean prepare $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS)
-
-obj/%.o: src/%.c
-	@if not exist obj mkdir obj
-	@if not exist build mkdir build
+	@echo build success
+obj/%.o: src/%.c FORCE
 	$(CC) $(CFLAGS) -c $< -o $@
+
+prepare:
+	@mkdir obj 2>nul || exit 0
+	@mkdir build 2>nul || exit 0
 
 run: all
 	./$(TARGET)
@@ -22,3 +24,5 @@ run: all
 clean:
 	del /Q obj\*.o
 	del /Q build\*.exe
+
+FORCE:
